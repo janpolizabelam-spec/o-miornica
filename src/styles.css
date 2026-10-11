@@ -18,13 +18,14 @@
   --grid: #e7eaef;
   --axis: #a8afba;
   --shadow: 0 1px 2px rgba(20, 25, 35, 0.05), 0 1px 1px rgba(20, 25, 35, 0.03);
+  --on-primary: #ffffff;
   --radius: 12px;
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #12151b;
     --surface: #1a1e26;
     --surface-2: #232834;
@@ -45,7 +46,32 @@
     --axis: #4a5262;
     --shadow: none;
     color-scheme: dark;
+    --on-primary: #10142a;
   }
+}
+
+:root[data-theme='dark'] {
+  --bg: #12151b;
+  --surface: #1a1e26;
+  --surface-2: #232834;
+  --border: #2f3542;
+  --text: #e8ebf0;
+  --muted: #9aa3b2;
+  --primary: #7d93f5;
+  --primary-hover: #95a7f7;
+  --primary-soft: #252d4a;
+  --pos: #5bc98a;
+  --pos-soft: #183324;
+  --neg: #f07a72;
+  --neg-soft: #3a1d1b;
+  --warn: #f0c060;
+  --warn-soft: #3a2f16;
+  --focus: #95a7f7;
+  --grid: #262b36;
+  --axis: #4a5262;
+  --shadow: none;
+  color-scheme: dark;
+  --on-primary: #10142a;
 }
 
 * {
@@ -129,7 +155,7 @@ textarea {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 20;
 }
 .header-inner {
@@ -267,12 +293,7 @@ textarea {
 }
 .btn-primary {
   background: var(--primary);
-  color: #fff;
-}
-@media (prefers-color-scheme: dark) {
-  .btn-primary {
-    color: #10142a;
-  }
+  color: var(--on-primary);
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--primary-hover);
@@ -1201,7 +1222,7 @@ input[aria-invalid='true'] {
     z-index: 30;
     background: var(--surface);
     border-top: 1px solid var(--border);
-    padding: 10px 16px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
     gap: 16px;
     align-items: center;
     justify-content: space-between;
